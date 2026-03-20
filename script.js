@@ -1,4 +1,5 @@
 // Holiday Extras Multi-Product Hashed Flow
+// Version: 2026-03-20-20:40 - Fixed product selection null checks
 
 const FLIGHT_API = "https://flight.dock-yard.io";
 
