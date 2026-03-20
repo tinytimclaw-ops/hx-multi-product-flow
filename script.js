@@ -283,8 +283,14 @@ function generateDateScroller(scrollerId, nextStep) {
     item.addEventListener('click', () => {
       if (nextStep === 'outdate') {
         state.outDate = dateStr;
-        // Hotel/hotel+parking don't need drop-off time - skip straight to return date
-        if (state.product === 'hotel' || state.product === 'hotel-parking') {
+        // Hotel-only doesn't need drop-off time or return date - go straight to room type
+        if (state.product === 'hotel') {
+          // Update roomtype back button to point to outdate
+          document.getElementById('roomTypeBackBtn').dataset.back = 'outdate';
+          navigateToStep('roomtype');
+        }
+        // Hotel+parking doesn't need drop-off time - skip straight to return date
+        else if (state.product === 'hotel-parking') {
           generateDateScroller('inDateScroller', 'indate');
           navigateToStep('indate');
         } else {
@@ -353,7 +359,9 @@ function generateTimeScroller(scrollerId, nextStep) {
         } else if (nextStep === 'intime') {
           state.inTime = timeEncoded;
           // Check if product needs room type selection
-          if (state.product === 'hotel' || state.product === 'hotel-parking') {
+          if (state.product === 'hotel-parking') {
+            // Update roomtype back button to point to intime for hotel+parking
+            document.getElementById('roomTypeBackBtn').dataset.back = 'intime';
             navigateToStep('roomtype');
           } else {
             // Parking - update flight screen back button to point to intime
@@ -475,8 +483,14 @@ function submitSearch() {
       alert('Please complete all fields');
       return;
     }
-  } else if (product === 'hotel' || product === 'hotel-parking') {
-    // Hotel/hotel+parking don't need outTime (drop-off time)
+  } else if (product === 'hotel') {
+    // Hotel-only only needs check-in date (outDate)
+    if (!product || !airport || !outDate) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else if (product === 'hotel-parking') {
+    // Hotel+parking doesn't need outTime (drop-off time)
     if (!product || !airport || !outDate || !inDate || !inTime) {
       alert('Please complete all fields');
       return;
@@ -501,11 +515,11 @@ function submitSearch() {
     // Hotel+Parking uses stayDate (outDate-1), out=outDate, in=inDate, room_1=roomType, room_2=roomType2
     searchUrl = `https://${basedomain}/static/?selectProduct=hcp&#/hotel_with_parking?agent=WY992&ppts=0&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&stay=${outDate}&room_1=${roomType}&room_2=${roomType2}&adcode=&promotionCode=`;
   } else if (product === 'hotel') {
-    // Hotel-only uses stay=inDate, out=inDate+1 day, room_1=roomType, room_2=roomType2
-    const checkOutDate = new Date(inDate);
+    // Hotel-only uses stay=outDate (check-in date), out=outDate+1 day
+    const checkOutDate = new Date(outDate);
     checkOutDate.setDate(checkOutDate.getDate() + 1);
     const outDateFormatted = checkOutDate.toISOString().split('T')[0];
-    searchUrl = `https://${basedomain}/static/?selectProduct=ho&#/hotel?agent=WY992&ppts=&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&out=${outDateFormatted}&stay=${inDate}&room_1=${roomType}&room_2=${roomType2}&adcode=&promotionCode=`;
+    searchUrl = `https://${basedomain}/static/?selectProduct=ho&#/hotel?agent=WY992&ppts=&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&out=${outDateFormatted}&stay=${outDate}&room_1=${roomType}&room_2=${roomType2}&adcode=&promotionCode=`;
   } else if (product === 'lounge') {
     // Lounge uses from={outDate}%20{outTime} format
     searchUrl = `https://${basedomain}/static/?selectProduct=lo&#/lounge?agent=WY992&ppts=&customer_ref=&lang=en&adults=${adults}&children=${children}&infants=${infants}&depart=${airport}&terminal=&arrive=&flight=${flight}&from=${outDate}%20${outTime}&adcode=&promotionCode=`;
