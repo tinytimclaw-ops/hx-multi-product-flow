@@ -11,6 +11,9 @@ const state = {
   inDate: null,
   inTime: null,
   roomType: 'D20',
+  adults: 2,
+  children: 0,
+  infants: 0,
   flight: 'default'
 };
 
@@ -76,6 +79,21 @@ document.addEventListener('DOMContentLoaded', () => {
       state.roomType = btn.dataset.value;
       // Update flight screen back button to point to roomtype
       document.getElementById('flightBackBtn').dataset.back = 'roomtype';
+      // Load destinations for flight lookup
+      fetchDestinations(state.airport, state.outDate);
+      navigateToStep('flight');
+    });
+  });
+
+  // Set up passenger selection
+  document.querySelectorAll('#screen-passengers .option-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [adults, children, infants] = btn.dataset.value.split(',').map(Number);
+      state.adults = adults;
+      state.children = children;
+      state.infants = infants;
+      // Update flight screen back button to point to passengers
+      document.getElementById('flightBackBtn').dataset.back = 'passengers';
       // Load destinations for flight lookup
       fetchDestinations(state.airport, state.outDate);
       navigateToStep('flight');
@@ -177,15 +195,20 @@ function generateTimeScroller(scrollerId, nextStep) {
       item.addEventListener('click', () => {
         if (nextStep === 'outtime') {
           state.outTime = timeEncoded;
-          generateDateScroller('inDateScroller', 'indate');
-          navigateToStep('indate');
+          // Lounge only needs departure date/time - skip return dates
+          if (state.product === 'lounge') {
+            navigateToStep('passengers');
+          } else {
+            generateDateScroller('inDateScroller', 'indate');
+            navigateToStep('indate');
+          }
         } else if (nextStep === 'intime') {
           state.inTime = timeEncoded;
           // Check if product needs room type selection
           if (state.product === 'hotel' || state.product === 'hotel-parking') {
             navigateToStep('roomtype');
           } else {
-            // Update flight screen back button to point to intime for parking/lounge
+            // Parking - update flight screen back button to point to intime
             document.getElementById('flightBackBtn').dataset.back = 'intime';
             // Load destinations for flight lookup
             fetchDestinations(state.airport, state.outDate);
@@ -275,11 +298,19 @@ async function fetchFlights(depart, departDate, destination) {
 
 // Submit search
 function submitSearch() {
-  const { product, airport, outDate, outTime, inDate, inTime, roomType, flight } = state;
+  const { product, airport, outDate, outTime, inDate, inTime, roomType, adults, children, infants, flight } = state;
 
-  if (!product || !airport || !outDate || !outTime || !inDate || !inTime) {
-    alert('Please complete all fields');
-    return;
+  // Lounge doesn't require return dates
+  if (product === 'lounge') {
+    if (!product || !airport || !outDate || !outTime) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else {
+    if (!product || !airport || !outDate || !outTime || !inDate || !inTime) {
+      alert('Please complete all fields');
+      return;
+    }
   }
 
   const host = window.location.host;
@@ -300,7 +331,8 @@ function submitSearch() {
     const outDateFormatted = checkOutDate.toISOString().split('T')[0];
     searchUrl = `https://${basedomain}/static/?selectProduct=ho&#/hotel?agent=WY992&ppts=&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&out=${outDateFormatted}&stay=${inDate}&room_1=${roomType}&room_2=&adcode=&promotionCode=`;
   } else if (product === 'lounge') {
-    searchUrl = `https://${basedomain}/static/?selectProduct=al&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&depart=${airport}&arrive=&flight=${flight}&in=${outDate}&out=${outDate}&filter_breakfast=&children=0&infants=0&from_categories=true&adcode=&promotionCode=`;
+    // Lounge uses from={outDate}%20{outTime} format
+    searchUrl = `https://${basedomain}/static/?selectProduct=lo&#/lounge?agent=WY992&ppts=&customer_ref=&lang=en&adults=${adults}&children=${children}&infants=${infants}&depart=${airport}&terminal=&arrive=&flight=${flight}&from=${outDate}%20${outTime}&adcode=&promotionCode=`;
   }
 
   window.location.href = searchUrl;
