@@ -236,6 +236,13 @@ body {
   box-shadow: 0 4px 12px rgba(253,220,6,0.3);
 }
 
+.option-item.selected {
+  background: #FDDC06;
+  border-color: #542E91;
+  color: #542E91;
+  font-weight: 700;
+}
+
 /* Date & Time scrollers */
 .date-scroller,
 .time-scroller {
@@ -289,6 +296,21 @@ body {
   border-color: #FDDC06;
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(253,220,6,0.3);
+}
+
+.date-item.selected,
+.time-item.selected {
+  background: #FDDC06;
+  border-color: #542E91;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(84,46,145,0.3);
+}
+
+.date-item.selected .date-day,
+.date-item.selected .date-full,
+.time-item.selected .time-value {
+  color: #542E91;
+  font-weight: 800;
 }
 
 .date-day {

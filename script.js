@@ -157,6 +157,36 @@ function updateTitlesForProduct(product) {
   }
 }
 
+// Mark selected items when returning to a screen
+function markSelectedItems(step) {
+  if (step === 'roomtype' && state.roomType) {
+    document.querySelectorAll('#screen-roomtype .option-item').forEach(btn => {
+      if (btn.dataset.value === state.roomType) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  } else if (step === 'passengers' && state.adults) {
+    const passValue = `${state.adults},${state.children},${state.infants}`;
+    document.querySelectorAll('#screen-passengers .option-item').forEach(btn => {
+      if (btn.dataset.value === passValue) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  } else if (step === 'airport' && state.airport) {
+    document.querySelectorAll('#screen-airport .option-item').forEach(btn => {
+      if (btn.dataset.value === state.airport) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  }
+}
+
 // Navigation
 function navigateToStep(step, isBack = false) {
   const currentScreen = document.querySelector('.screen:not([style*="display: none"])');
@@ -176,6 +206,8 @@ function navigateToStep(step, isBack = false) {
   setTimeout(() => {
     nextScreen.style.display = 'block';
     window.location.hash = step;
+    // Mark previously selected items
+    markSelectedItems(step);
   }, isBack ? 0 : 150);
 }
 
@@ -187,6 +219,9 @@ function generateDateScroller(scrollerId, nextStep) {
   const today = new Date();
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // Determine which date is already selected
+  const selectedDate = nextStep === 'outdate' ? state.outDate : state.inDate;
 
   // For return dates, determine minimum date (outDate + 1 day)
   let minDate = null;
@@ -212,6 +247,9 @@ function generateDateScroller(scrollerId, nextStep) {
 
     const item = document.createElement('button');
     item.className = 'date-item';
+    if (dateStr === selectedDate) {
+      item.classList.add('selected');
+    }
     item.dataset.value = dateStr;
     item.innerHTML = `
       <div class="date-day">${dayName}</div>
@@ -254,6 +292,9 @@ function generateTimeScroller(scrollerId, nextStep) {
   const selectedDate = nextStep === 'outtime' ? state.outDate : state.inDate;
   const isToday = selectedDate === today;
 
+  // Determine which time is already selected
+  const selectedTime = nextStep === 'outtime' ? state.outTime : state.inTime;
+
   // Generate times from 00:00 to 23:30 in 30min intervals
   for (let h = 0; h < 24; h++) {
     for (let m = 0; m < 60; m += 30) {
@@ -271,6 +312,9 @@ function generateTimeScroller(scrollerId, nextStep) {
 
       const item = document.createElement('button');
       item.className = 'time-item';
+      if (timeEncoded === selectedTime) {
+        item.classList.add('selected');
+      }
       item.dataset.value = timeEncoded;
       item.innerHTML = `<div class="time-value">${timeValue}</div>`;
 
