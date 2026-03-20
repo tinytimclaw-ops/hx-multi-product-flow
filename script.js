@@ -21,21 +21,47 @@ const state = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-  // Check for Location URL parameter
+  // Check for URL parameters
   const urlParams = new URLSearchParams(window.location.search);
   const locationParam = urlParams.get('Location') || urlParams.get('location');
+  const productParam = urlParams.get('Product') || urlParams.get('product');
 
   // Valid UK airport codes
   const validAirports = ['LHR', 'LGW', 'MAN', 'STN', 'LTN', 'BHX', 'EDI', 'BRS', 'NCL', 'LBA', 'EMA', 'LPL', 'GLA', 'EXT', 'LCY'];
 
+  // Map product codes to product values
+  const productMap = {
+    'cp': 'parking',
+    'hcp': 'hotel-parking',
+    'ho': 'hotel',
+    'lo': 'lounge'
+  };
+
+  // Set airport if valid
   if (locationParam && validAirports.includes(locationParam.toUpperCase())) {
     state.airport = locationParam.toUpperCase();
+  }
+
+  // Set product if valid
+  if (productParam && productMap[productParam.toLowerCase()]) {
+    state.product = productMap[productParam.toLowerCase()];
+    updateTitlesForProduct(state.product);
   }
 
   // Check hash on load
   const hash = window.location.hash.slice(1);
   if (hash && document.getElementById(`screen-${hash}`)) {
     navigateToStep(hash, false);
+  } else if (state.product && state.airport) {
+    // Both product and airport are set - skip to date selection
+    generateDateScroller('outDateScroller', 'outdate');
+    navigateToStep('outdate');
+  } else if (state.product) {
+    // Product is set - skip to airport selection
+    navigateToStep('airport');
+  } else if (state.airport) {
+    // Airport is set - show product selection (default behavior)
+    // navigateToStep('product') is implicit as it's the first screen
   }
 
   // Set up product selection
