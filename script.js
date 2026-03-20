@@ -19,6 +19,17 @@ const state = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+  // Check for Location URL parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const locationParam = urlParams.get('Location') || urlParams.get('location');
+
+  // Valid UK airport codes
+  const validAirports = ['LHR', 'LGW', 'MAN', 'STN', 'LTN', 'BHX', 'EDI', 'BRS', 'NCL', 'LBA', 'EMA', 'LPL', 'GLA', 'EXT', 'LCY'];
+
+  if (locationParam && validAirports.includes(locationParam.toUpperCase())) {
+    state.airport = locationParam.toUpperCase();
+  }
+
   // Check hash on load
   const hash = window.location.hash.slice(1);
   if (hash && document.getElementById(`screen-${hash}`)) {
@@ -30,7 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', () => {
       state.product = btn.dataset.value;
       const next = btn.dataset.next;
-      navigateToStep(next);
+
+      // Skip airport screen if Location param is valid
+      if (state.airport && next === 'airport') {
+        generateDateScroller('outDateScroller', 'outdate');
+        navigateToStep('outdate');
+      } else {
+        navigateToStep(next);
+      }
     });
   });
 
