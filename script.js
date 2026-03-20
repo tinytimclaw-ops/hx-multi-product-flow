@@ -468,13 +468,21 @@ async function fetchFlights(depart, departDate, destination) {
 function submitSearch() {
   const { product, airport, outDate, outTime, inDate, inTime, roomType, roomType2, adults, children, infants, flight } = state;
 
-  // Lounge doesn't require return dates
+  // Validate required fields based on product type
   if (product === 'lounge') {
+    // Lounge only needs departure date/time
     if (!product || !airport || !outDate || !outTime) {
       alert('Please complete all fields');
       return;
     }
+  } else if (product === 'hotel' || product === 'hotel-parking') {
+    // Hotel/hotel+parking don't need outTime (drop-off time)
+    if (!product || !airport || !outDate || !inDate || !inTime) {
+      alert('Please complete all fields');
+      return;
+    }
   } else {
+    // Parking needs all date/time fields
     if (!product || !airport || !outDate || !outTime || !inDate || !inTime) {
       alert('Please complete all fields');
       return;
