@@ -10,7 +10,7 @@ const state = {
   outTime: null,
   inDate: null,
   inTime: null,
-  rooms: 1,
+  roomType: 'D20',
   flight: 'default'
 };
 
@@ -70,10 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
     state.flight = this.value || 'default';
   });
 
-  // Set up rooms selection
-  document.querySelectorAll('#screen-rooms .option-item').forEach(btn => {
+  // Set up room type selection
+  document.querySelectorAll('#screen-roomtype .option-item').forEach(btn => {
     btn.addEventListener('click', () => {
-      state.rooms = btn.dataset.value;
+      state.roomType = btn.dataset.value;
+      // Update flight screen back button to point to roomtype
+      document.getElementById('flightBackBtn').dataset.back = 'roomtype';
       // Load destinations for flight lookup
       fetchDestinations(state.airport, state.outDate);
       navigateToStep('flight');
@@ -179,10 +181,12 @@ function generateTimeScroller(scrollerId, nextStep) {
           navigateToStep('indate');
         } else if (nextStep === 'intime') {
           state.inTime = timeEncoded;
-          // Check if product needs rooms selection
+          // Check if product needs room type selection
           if (state.product === 'hotel' || state.product === 'hotel-parking') {
-            navigateToStep('rooms');
+            navigateToStep('roomtype');
           } else {
+            // Update flight screen back button to point to intime for parking/lounge
+            document.getElementById('flightBackBtn').dataset.back = 'intime';
             // Load destinations for flight lookup
             fetchDestinations(state.airport, state.outDate);
             navigateToStep('flight');
@@ -271,7 +275,7 @@ async function fetchFlights(depart, departDate, destination) {
 
 // Submit search
 function submitSearch() {
-  const { product, airport, outDate, outTime, inDate, inTime, rooms, flight } = state;
+  const { product, airport, outDate, outTime, inDate, inTime, roomType, flight } = state;
 
   if (!product || !airport || !outDate || !outTime || !inDate || !inTime) {
     alert('Please complete all fields');
@@ -287,9 +291,14 @@ function submitSearch() {
   if (product === 'parking') {
     searchUrl = `https://${basedomain}/static/?selectProduct=cp&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&depart=${airport}&terminal=&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&park_from=${outTime}&park_to=${inTime}&filter_meetandgreet=&filter_parkandride=&children=0&infants=0&redirectReferal=carpark&from_categories=true&adcode=&promotionCode=`;
   } else if (product === 'hotel-parking') {
-    searchUrl = `https://${basedomain}/static/?selectProduct=hpp&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&rooms=${rooms}&depart=${airport}&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&filter_breakfast=&filter_wifi=&children=0&infants=0&from_categories=true&adcode=&promotionCode=`;
+    // Hotel+Parking uses stayDate (outDate-1), out=outDate, in=inDate, room_1=roomType
+    searchUrl = `https://${basedomain}/static/?selectProduct=hcp&#/hotel_with_parking?agent=WY992&ppts=0&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&stay=${outDate}&room_1=${roomType}&room_2=&adcode=&promotionCode=`;
   } else if (product === 'hotel') {
-    searchUrl = `https://${basedomain}/static/?selectProduct=h&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&rooms=${rooms}&depart=${airport}&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&filter_breakfast=&filter_wifi=&children=0&infants=0&from_categories=true&adcode=&promotionCode=`;
+    // Hotel-only uses stay=inDate, out=inDate+1 day
+    const checkOutDate = new Date(inDate);
+    checkOutDate.setDate(checkOutDate.getDate() + 1);
+    const outDateFormatted = checkOutDate.toISOString().split('T')[0];
+    searchUrl = `https://${basedomain}/static/?selectProduct=ho&#/hotel?agent=WY992&ppts=&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&out=${outDateFormatted}&stay=${inDate}&room_1=${roomType}&room_2=&adcode=&promotionCode=`;
   } else if (product === 'lounge') {
     searchUrl = `https://${basedomain}/static/?selectProduct=al&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&depart=${airport}&arrive=&flight=${flight}&in=${outDate}&out=${outDate}&filter_breakfast=&children=0&infants=0&from_categories=true&adcode=&promotionCode=`;
   }
