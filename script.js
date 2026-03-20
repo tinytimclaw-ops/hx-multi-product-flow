@@ -80,24 +80,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Navigation
 function navigateToStep(step, isBack = false) {
-  const currentScreen = document.querySelector('.screen[style="display: block;"], .screen:not([style*="display"])');
+  const currentScreen = document.querySelector('.screen:not([style*="display: none"])');
   const nextScreen = document.getElementById(`screen-${step}`);
 
   if (!nextScreen) return;
 
   // Hide current, show next
-  if (currentScreen) {
+  if (currentScreen && currentScreen !== nextScreen) {
     currentScreen.classList.add(isBack ? 'slide-out-right' : 'slide-out-left');
     setTimeout(() => {
       currentScreen.style.display = 'none';
       currentScreen.classList.remove('slide-out-left', 'slide-out-right');
-    }, 400);
+    }, 300);
   }
 
   setTimeout(() => {
     nextScreen.style.display = 'block';
     window.location.hash = step;
-  }, isBack ? 0 : 200);
+  }, isBack ? 0 : 150);
 }
 
 // Generate date scroller

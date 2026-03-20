@@ -23,59 +23,54 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: slideInRight 0.3s ease-out;
 }
 
 .screen.slide-out-left {
-  animation: slideOutLeft 0.4s ease-out forwards;
+  animation: slideOutLeft 0.3s ease-in forwards;
 }
 
 .screen.slide-out-right {
-  animation: slideOutRight 0.4s ease-out forwards;
+  animation: slideOutRight 0.3s ease-in forwards;
 }
 
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(100%) scale(0.9);
+    transform: translateX(50px);
   }
   to {
     opacity: 1;
-    transform: translateX(0) scale(1);
+    transform: translateX(0);
   }
 }
 
 @keyframes slideOutLeft {
   to {
     opacity: 0;
-    transform: translateX(-100%) scale(0.9);
+    transform: translateX(-50px);
   }
 }
 
 @keyframes slideOutRight {
   to {
     opacity: 0;
-    transform: translateX(100%) scale(0.9);
+    transform: translateX(50px);
   }
 }
 
 /* Banner */
 .banner {
   width: 100%;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
-  animation: bannerPulse 3s ease-in-out infinite;
 }
 
 .banner-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-@keyframes bannerPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  object-position: center;
 }
 
 /* Screen content */
@@ -85,16 +80,32 @@ body {
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
 }
 
 .logo-container {
   text-align: center;
   margin-bottom: 24px;
-  animation: fadeIn 0.8s ease-out 0.3s both;
 }
 
 .logo {
   height: 60px;
+}
+
+/* Persistent logo for all screens */
+.screen-content::before {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 40px;
+  background: url('https://d17s4kc6349e5h.cloudfront.net/holidayextras/assets/images/logos/HolidayExtras-logo-horizontal-transparent.svg') center/contain no-repeat;
+  margin: 0 auto 24px;
+  opacity: 0.9;
+}
+
+/* Hide the inline logo container on first screen since we have persistent logo */
+#screen-product .logo-container {
+  display: none;
 }
 
 .back-btn {
@@ -235,6 +246,10 @@ body {
   overflow-y: auto;
   scroll-behavior: smooth;
   animation: fadeIn 0.6s ease-out 0.3s both;
+  width: calc(100vw - 40px);
+  max-width: 100%;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
 }
 
 .date-scroller::-webkit-scrollbar,
