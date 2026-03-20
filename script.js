@@ -36,7 +36,9 @@ document.addEventListener('DOMContentLoaded', () => {
     'ho': 'hotel',
     'lo': 'lounge',
     'ti': 'insurance',
-    'ot': 'transfers'
+    'ot': 'transfers',
+    'ch': 'carhire',
+    'ft': 'fasttrack'
   };
 
   // Set airport if valid
@@ -89,8 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('#screen-airport .option-item').forEach(btn => {
     btn.addEventListener('click', () => {
       state.airport = btn.dataset.value;
-      // Insurance and transfers don't need dates - submit immediately
-      if (state.product === 'insurance' || state.product === 'transfers') {
+      // Insurance, transfers, car hire, and fast track don't need dates - submit immediately
+      if (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack') {
         submitSearch();
       } else {
         generateDateScroller('outDateScroller', 'outdate');
@@ -510,8 +512,8 @@ function submitSearch() {
   const { product, airport, outDate, outTime, inDate, inTime, roomType, roomType2, adults, children, infants, flight } = state;
 
   // Validate required fields based on product type
-  if (product === 'insurance' || product === 'transfers') {
-    // Insurance and transfers only need product and airport
+  if (product === 'insurance' || product === 'transfers' || product === 'carhire' || product === 'fasttrack') {
+    // Insurance, transfers, car hire, and fast track only need product and airport
     if (!product || !airport) {
       alert('Please complete all fields');
       return;
@@ -546,6 +548,10 @@ function submitSearch() {
   const isLocal = host.startsWith('127') || host.includes('github.io');
   const basedomain = isLocal ? 'www.holidayextras.com' : host;
 
+  // Get all URL params to pass through
+  const urlParams = new URLSearchParams(window.location.search);
+  const allParams = urlParams.toString();
+
   // Build search URL
   let searchUrl;
   if (product === 'parking') {
@@ -563,11 +569,17 @@ function submitSearch() {
     // Lounge uses from={outDate}%20{outTime} format
     searchUrl = `https://${basedomain}/static/?selectProduct=lo&#/lounge?agent=WY992&ppts=&customer_ref=&lang=en&adults=${adults}&children=${children}&infants=${infants}&depart=${airport}&terminal=&arrive=&flight=${flight}&from=${outDate}%20${outTime}&adcode=&promotionCode=`;
   } else if (product === 'insurance') {
-    // Travel insurance - basic product page
-    searchUrl = `https://${basedomain}/travel-insurance/?agent=WY992`;
+    // Travel insurance - pass through all params
+    searchUrl = `https://${basedomain}/travel-insurance.html?chosen=ins&${allParams}`;
   } else if (product === 'transfers') {
-    // Overseas transfers - basic product page
-    searchUrl = `https://${basedomain}/transfers/?agent=WY992`;
+    // Overseas transfers - pass through all params
+    searchUrl = `https://${basedomain}/airport-transfers.html?chosen=transfers&${allParams}`;
+  } else if (product === 'carhire') {
+    // Car hire - pass through all params
+    searchUrl = `https://${basedomain}/car-hire.html?launch_id=ENG&chosen=carhire&${allParams}`;
+  } else if (product === 'fasttrack') {
+    // Fast track - pass through all params
+    searchUrl = `https://${basedomain}/fast-track.html?chosen=fasttrack&${allParams}`;
   }
 
   window.location.href = searchUrl;
