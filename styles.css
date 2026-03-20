@@ -279,6 +279,8 @@ body {
   cursor: pointer;
   transition: all 0.3s;
   font-family: 'Nunito', sans-serif;
+  width: 100%;
+  display: block;
 }
 
 .date-item:hover,
