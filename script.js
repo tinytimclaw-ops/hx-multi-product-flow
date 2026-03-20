@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
       state.product = btn.dataset.value;
       const next = btn.dataset.next;
 
+      // Update titles based on product
+      updateTitlesForProduct(state.product);
+
       // Skip airport screen if Location param is valid
       if (state.airport && next === 'airport') {
         generateDateScroller('outDateScroller', 'outdate');
@@ -127,6 +130,33 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Update titles based on product
+function updateTitlesForProduct(product) {
+  const outDateTitle = document.getElementById('outDateTitle');
+  const outDateSubtitle = document.getElementById('outDateSubtitle');
+  const inDateTitle = document.getElementById('inDateTitle');
+  const inDateSubtitle = document.getElementById('inDateSubtitle');
+  const inDateBackBtn = document.getElementById('inDateBackBtn');
+
+  if (product === 'hotel' || product === 'hotel-parking') {
+    outDateTitle.textContent = 'When are you staying?';
+    outDateSubtitle.textContent = 'Select your check-in date';
+    inDateTitle.textContent = 'When are you leaving?';
+    inDateSubtitle.textContent = 'Select your check-out date';
+    inDateBackBtn.dataset.back = 'outdate'; // Hotel skips outtime, back goes to outdate
+  } else if (product === 'lounge') {
+    outDateTitle.textContent = 'When are you flying?';
+    outDateSubtitle.textContent = 'Select your departure date';
+  } else {
+    // Parking
+    outDateTitle.textContent = 'When are you going?';
+    outDateSubtitle.textContent = 'Select your drop-off date';
+    inDateTitle.textContent = 'When are you back?';
+    inDateSubtitle.textContent = 'Select your collection date';
+    inDateBackBtn.dataset.back = 'outtime';
+  }
+}
+
 // Navigation
 function navigateToStep(step, isBack = false) {
   const currentScreen = document.querySelector('.screen:not([style*="display: none"])');
@@ -191,8 +221,14 @@ function generateDateScroller(scrollerId, nextStep) {
     item.addEventListener('click', () => {
       if (nextStep === 'outdate') {
         state.outDate = dateStr;
-        generateTimeScroller('outTimeScroller', 'outtime');
-        navigateToStep('outtime');
+        // Hotel/hotel+parking don't need drop-off time - skip straight to return date
+        if (state.product === 'hotel' || state.product === 'hotel-parking') {
+          generateDateScroller('inDateScroller', 'indate');
+          navigateToStep('indate');
+        } else {
+          generateTimeScroller('outTimeScroller', 'outtime');
+          navigateToStep('outtime');
+        }
       } else if (nextStep === 'indate') {
         state.inDate = dateStr;
         generateTimeScroller('inTimeScroller', 'intime');
@@ -209,9 +245,25 @@ function generateTimeScroller(scrollerId, nextStep) {
   const scroller = document.getElementById(scrollerId);
   scroller.innerHTML = '';
 
+  // Check if we're selecting time for today
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  const selectedDate = nextStep === 'outtime' ? state.outDate : state.inDate;
+  const isToday = selectedDate === today;
+
   // Generate times from 00:00 to 23:30 in 30min intervals
   for (let h = 0; h < 24; h++) {
     for (let m = 0; m < 60; m += 30) {
+      // Skip past times if today is selected
+      if (isToday && nextStep === 'outtime') {
+        if (h < currentHour || (h === currentHour && m <= currentMinute)) {
+          continue;
+        }
+      }
+
       const hour = h.toString().padStart(2, '0');
       const min = m.toString().padStart(2, '0');
       const timeValue = `${hour}:${min}`;
@@ -306,17 +358,38 @@ async function fetchFlights(depart, departDate, destination) {
     select.innerHTML = '<option value="">Select your flight...</option>';
 
     if (flights && flights.length > 0) {
+      // Calculate minimum flight time (2 hours after outTime)
+      let minFlightTime = null;
+      if (state.outTime) {
+        const outTimeDecoded = state.outTime.replace('%3A', ':');
+        const [outHour, outMin] = outTimeDecoded.split(':').map(Number);
+        const outMinutes = outHour * 60 + outMin;
+        const minMinutes = outMinutes + 120; // 2 hours later
+        minFlightTime = `${String(Math.floor(minMinutes / 60)).padStart(2, '0')}:${String(minMinutes % 60).padStart(2, '0')}`;
+      }
+
+      let filteredCount = 0;
       flights.forEach(f => {
         const code = (f.flight && f.flight.code) || '';
         const depTime = (f.departure && f.departure.time) || '';
         const stops = (f.flight && f.flight.connectingFlights && f.flight.connectingFlights.amount) || 0;
         const stopsText = stops === 0 ? 'Direct' : `${stops} stop${stops > 1 ? 's' : ''}`;
 
+        // Filter out flights before 2 hours after outTime
+        if (minFlightTime && depTime && depTime < minFlightTime) {
+          return; // Skip this flight
+        }
+
+        filteredCount++;
         const option = document.createElement('option');
         option.value = code;
         option.textContent = `${code} - ${depTime} (${stopsText})`;
         select.appendChild(option);
       });
+
+      if (filteredCount === 0) {
+        select.innerHTML = '<option value="">No flights found (2+ hours after drop-off)</option>';
+      }
     } else {
       select.innerHTML = '<option value="">No flights found</option>';
     }

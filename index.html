@@ -87,8 +87,8 @@
       <div class="screen-content">
         <button class="back-btn" data-back="airport">← Back</button>
 
-        <h1 class="screen-title">When are you going?</h1>
-        <p class="screen-subtitle">Select your drop-off date</p>
+        <h1 class="screen-title" id="outDateTitle">When are you going?</h1>
+        <p class="screen-subtitle" id="outDateSubtitle">Select your drop-off date</p>
 
         <div class="date-scroller" id="outDateScroller"></div>
       </div>
@@ -109,10 +109,10 @@
     <!-- Step 5: Collection date -->
     <div class="screen" id="screen-indate" data-step="indate" style="display: none;">
       <div class="screen-content">
-        <button class="back-btn" data-back="outtime">← Back</button>
+        <button class="back-btn" data-back="outtime" id="inDateBackBtn">← Back</button>
 
-        <h1 class="screen-title">When are you back?</h1>
-        <p class="screen-subtitle">Select your collection date</p>
+        <h1 class="screen-title" id="inDateTitle">When are you back?</h1>
+        <p class="screen-subtitle" id="inDateSubtitle">Select your collection date</p>
 
         <div class="date-scroller" id="inDateScroller"></div>
       </div>
