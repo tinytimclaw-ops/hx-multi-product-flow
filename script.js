@@ -585,7 +585,7 @@ function submitSearch() {
     // Overseas transfers - pass through all params
     searchUrl = `https://${basedomain}/airport-transfers.html?chosen=transfers&${allParams}`;
   } else if (product === 'carhire') {
-    // Car hire - pass through all params
+    // Car hire - pass through all params (note: launch_id query uses ?)
     searchUrl = `https://${basedomain}/car-hire.html?launch_id=ENG&chosen=carhire&${allParams}`;
   } else if (product === 'fasttrack') {
     // Fast track - pass through all params
