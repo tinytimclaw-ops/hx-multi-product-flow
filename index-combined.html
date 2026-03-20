@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Holiday Extras - Less hassle. More holiday.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+/* Holiday Extras Multi-Product Flow */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #542E91 0%, #3d2168 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Screens */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease-out;
+}
+
+.screen.slide-out-left {
+  animation: slideOutLeft 0.3s ease-in forwards;
+}
+
+.screen.slide-out-right {
+  animation: slideOutRight 0.3s ease-in forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+}
+
+@keyframes slideOutRight {
+  to {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+}
+
+/* Banner */
+.banner {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Screen content */
+.screen-content {
+  flex: 1;
+  padding: 32px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.logo {
+  height: 60px;
+}
+
+/* Persistent logo for all screens */
+.screen-content::before {
+  content: '';
+  display: block;
+  width: 120px;
+  height: 40px;
+  background: url('https://d17s4kc6349e5h.cloudfront.net/holidayextras/assets/images/logos/HolidayExtras-logo-horizontal-transparent.svg') center/contain no-repeat;
+  margin: 0 auto 24px;
+  opacity: 0.9;
+}
+
+/* Hide the inline logo container on first screen since we have persistent logo */
+#screen-product .logo-container {
+  display: none;
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateX(-4px);
+}
+
+.screen-title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 12px;
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.screen-subtitle {
+  color: rgba(255,255,255,0.9);
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Option cards (product selection) */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.option-card {
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  border: 3px solid transparent;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: 'Nunito', sans-serif;
+}
+
+.option-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: #FDDC06;
+  box-shadow: 0 12px 24px rgba(253,220,6,0.4);
+}
+
+.option-card:active {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.option-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.option-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #542E91;
+  margin-bottom: 4px;
+}
+
+.option-desc {
+  font-size: 14px;
+  color: #767d7d;
+}
+
+/* Option list (airport selection) */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.option-item {
+  background: rgba(255,255,255,0.95);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #542E91;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.option-item:hover {
+  background: #fff;
+  border-color: #FDDC06;
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(253,220,6,0.3);
+}
+
+.option-item.selected {
+  background: #FDDC06;
+  border-color: #542E91;
+  color: #542E91;
+  font-weight: 700;
+}
+
+/* Date & Time scrollers */
+.date-scroller,
+.time-scroller {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.date-scroller::-webkit-scrollbar,
+.time-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.date-scroller::-webkit-scrollbar-track,
+.time-scroller::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+.date-scroller::-webkit-scrollbar-thumb,
+.time-scroller::-webkit-scrollbar-thumb {
+  background: #FDDC06;
+  border-radius: 10px;
+}
+
+.date-item,
+.time-item {
+  background: rgba(255,255,255,0.9);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+  width: 100%;
+  display: block;
+}
+
+.date-item:hover,
+.time-item:hover {
+  background: #fff;
+  border-color: #FDDC06;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(253,220,6,0.3);
+}
+
+.date-item.selected,
+.time-item.selected {
+  background: #FDDC06;
+  border-color: #542E91;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(84,46,145,0.3);
+}
+
+.date-item.selected .date-day,
+.date-item.selected .date-full,
+.time-item.selected .time-value {
+  color: #542E91;
+  font-weight: 800;
+}
+
+.date-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: #542E91;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.date-full {
+  font-size: 20px;
+  font-weight: 700;
+  color: #232323;
+}
+
+.time-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #542E91;
+}
+
+/* Flight section */
+.flight-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.flight-select {
+  background: rgba(255,255,255,0.95);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #542E91;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23542E91' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 20px;
+  padding-right: 48px;
+}
+
+.flight-select:focus {
+  outline: none;
+  border-color: #FDDC06;
+  box-shadow: 0 0 0 4px rgba(253,220,6,0.2);
+}
+
+.skip-btn,
+.no-thanks-btn {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.skip-btn:hover,
+.no-thanks-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
+
+.no-thanks-btn {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #FDDC06 0%, #ffc107 100%);
+  border: none;
+  color: #542E91;
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 8px 20px rgba(253,220,6,0.4);
+}
+
+.submit-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(253,220,6,0.6);
+}
+
+.submit-btn:active {
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .screen-title {
+    font-size: 28px;
+  }
+
+  .screen-subtitle {
+    font-size: 16px;
+  }
+
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .banner {
+    height: 150px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Step 1: Product selection with banner -->
+    <div class="screen" id="screen-product" data-step="product">
+      <div class="banner">
+        <img src="assets/banner.jpg" alt="Holiday Extras" class="banner-img">
+      </div>
+
+      <div class="screen-content">
+        <div class="logo-container">
+          <img src="https://d17s4kc6349e5h.cloudfront.net/holidayextras/assets/images/logos/HolidayExtras-logo-horizontal-transparent.svg"
+               alt="Holiday Extras" class="logo">
+        </div>
+
+        <h1 class="screen-title">What do you need?</h1>
+        <p class="screen-subtitle">Less hassle. More holiday.</p>
+
+        <div class="options-grid">
+          <button class="option-card" data-value="parking" data-next="airport">
+            <div class="option-icon">🅿️</div>
+            <div class="option-title">Airport Parking</div>
+            <div class="option-desc">Save up to 60%</div>
+          </button>
+
+          <button class="option-card" data-value="hotel-parking" data-next="airport">
+            <div class="option-icon">🏨</div>
+            <div class="option-title">Hotel + Parking</div>
+            <div class="option-desc">Stay & park packages</div>
+          </button>
+
+          <button class="option-card" data-value="hotel" data-next="airport">
+            <div class="option-icon">🛏️</div>
+            <div class="option-title">Airport Hotel</div>
+            <div class="option-desc">Stay before you fly</div>
+          </button>
+
+          <button class="option-card" data-value="lounge" data-next="airport">
+            <div class="option-icon">✈️</div>
+            <div class="option-title">Airport Lounge</div>
+            <div class="option-desc">Relax in style</div>
+          </button>
+
+          <button class="option-card" data-value="insurance" data-next="airport">
+            <div class="option-icon">🛡️</div>
+            <div class="option-title">Travel Insurance</div>
+            <div class="option-desc">Protect your trip</div>
+          </button>
+
+          <button class="option-card" data-value="transfers" data-next="airport">
+            <div class="option-icon">🚐</div>
+            <div class="option-title">Overseas Transfers</div>
+            <div class="option-desc">Door to door service</div>
+          </button>
+
+          <button class="option-card" data-value="carhire" data-next="airport">
+            <div class="option-icon">🚗</div>
+            <div class="option-title">Car Hire</div>
+            <div class="option-desc">Compare & save</div>
+          </button>
+
+          <button class="option-card" data-value="fasttrack" data-next="airport">
+            <div class="option-icon">⚡</div>
+            <div class="option-title">Fast Track</div>
+            <div class="option-desc">Skip the queues</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Airport selection -->
+    <div class="screen" id="screen-airport" data-step="airport" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="product">← Back</button>
+
+        <h1 class="screen-title">Which airport?</h1>
+        <p class="screen-subtitle">Select your departure airport</p>
+
+        <div class="options-list" id="airportList">
+          <button class="option-item" data-value="LHR">London Heathrow</button>
+          <button class="option-item" data-value="LGW">London Gatwick</button>
+          <button class="option-item" data-value="MAN">Manchester</button>
+          <button class="option-item" data-value="STN">London Stansted</button>
+          <button class="option-item" data-value="LTN">London Luton</button>
+          <button class="option-item" data-value="BHX">Birmingham</button>
+          <button class="option-item" data-value="EDI">Edinburgh</button>
+          <button class="option-item" data-value="BRS">Bristol</button>
+          <button class="option-item" data-value="NCL">Newcastle</button>
+          <button class="option-item" data-value="LBA">Leeds Bradford</button>
+          <button class="option-item" data-value="EMA">East Midlands</button>
+          <button class="option-item" data-value="LPL">Liverpool</button>
+          <button class="option-item" data-value="GLA">Glasgow</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Drop-off date -->
+    <div class="screen" id="screen-outdate" data-step="outdate" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="airport">← Back</button>
+
+        <h1 class="screen-title" id="outDateTitle">When are you going?</h1>
+        <p class="screen-subtitle" id="outDateSubtitle">Select your drop-off date</p>
+
+        <div class="date-scroller" id="outDateScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 4: Drop-off time -->
+    <div class="screen" id="screen-outtime" data-step="outtime" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="outdate">← Back</button>
+
+        <h1 class="screen-title">What time?</h1>
+        <p class="screen-subtitle">Drop-off time</p>
+
+        <div class="time-scroller" id="outTimeScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 5: Collection date -->
+    <div class="screen" id="screen-indate" data-step="indate" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="outtime" id="inDateBackBtn">← Back</button>
+
+        <h1 class="screen-title" id="inDateTitle">When are you back?</h1>
+        <p class="screen-subtitle" id="inDateSubtitle">Select your collection date</p>
+
+        <div class="date-scroller" id="inDateScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 6: Collection time -->
+    <div class="screen" id="screen-intime" data-step="intime" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="indate">← Back</button>
+
+        <h1 class="screen-title">Return time?</h1>
+        <p class="screen-subtitle">Collection time</p>
+
+        <div class="time-scroller" id="inTimeScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 6.5: Room type (for hotel/hotel+parking only) -->
+    <div class="screen" id="screen-roomtype" data-step="roomtype" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="intime" id="roomTypeBackBtn">← Back</button>
+
+        <h1 class="screen-title">Room type?</h1>
+        <p class="screen-subtitle">Select your room configuration</p>
+
+        <div class="options-list" id="roomTypeList">
+          <button class="option-item" data-value="D20">Double - 2 adults</button>
+          <button class="option-item" data-value="T20">Twin - 2 adults</button>
+          <button class="option-item" data-value="S10">Single - 1 adult</button>
+          <button class="option-item" data-value="T11">Twin - 1 adult 1 child</button>
+          <button class="option-item" data-value="T21">Triple - 2 adults 1 child</button>
+          <button class="option-item" data-value="T30">Triple - 3 adults</button>
+          <button class="option-item" data-value="F22">Family - 2 adults 2 children</button>
+          <button class="option-item" data-value="F23">Family - 2 adults 3 children</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6.6: Second room type (for hotel/hotel+parking only) -->
+    <div class="screen" id="screen-roomtype2" data-step="roomtype2" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="roomtype">← Back</button>
+
+        <h1 class="screen-title">Need a second room?</h1>
+        <p class="screen-subtitle">Optional - add another room type</p>
+
+        <button class="no-thanks-btn" id="noThanksBtn">No thanks</button>
+
+        <div class="options-list" id="roomType2List">
+          <button class="option-item" data-value="D20">Double - 2 adults</button>
+          <button class="option-item" data-value="T20">Twin - 2 adults</button>
+          <button class="option-item" data-value="S10">Single - 1 adult</button>
+          <button class="option-item" data-value="T11">Twin - 1 adult 1 child</button>
+          <button class="option-item" data-value="T21">Triple - 2 adults 1 child</button>
+          <button class="option-item" data-value="T30">Triple - 3 adults</button>
+          <button class="option-item" data-value="F22">Family - 2 adults 2 children</button>
+          <button class="option-item" data-value="F23">Family - 2 adults 3 children</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 6.5: Passengers (for lounge only) -->
+    <div class="screen" id="screen-passengers" data-step="passengers" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="outtime">← Back</button>
+
+        <h1 class="screen-title">How many passengers?</h1>
+        <p class="screen-subtitle">Select number of people using the lounge</p>
+
+        <div class="options-list" id="passengersList">
+          <button class="option-item" data-value="2,0,0">2 adults</button>
+          <button class="option-item" data-value="1,0,0">1 adult</button>
+          <button class="option-item" data-value="3,0,0">3 adults</button>
+          <button class="option-item" data-value="4,0,0">4 adults</button>
+          <button class="option-item" data-value="2,1,0">2 adults, 1 child</button>
+          <button class="option-item" data-value="2,2,0">2 adults, 2 children</button>
+          <button class="option-item" data-value="2,0,1">2 adults, 1 infant</button>
+          <button class="option-item" data-value="1,1,0">1 adult, 1 child</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 7: Flight (optional) -->
+    <div class="screen" id="screen-flight" data-step="flight" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="roomtype" id="flightBackBtn">← Back</button>
+
+        <h1 class="screen-title">Add your flight?</h1>
+        <p class="screen-subtitle">Optional - helps us match your parking time</p>
+
+        <div class="flight-section">
+          <select class="flight-select" id="destinationSelect">
+            <option value="">Select destination...</option>
+          </select>
+
+          <select class="flight-select" id="flightSelect" style="display: none;">
+            <option value="">Select your flight...</option>
+          </select>
+
+          <button class="skip-btn">Skip - Continue without flight</button>
+        </div>
+
+        <button class="submit-btn" id="submitBtn">Find options →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+// Holiday Extras Multi-Product Hashed Flow
+// Version: 2026-03-20-20:40 - Fixed product selection null checks
+
+const FLIGHT_API = "https://flight.dock-yard.io";
+
+// State
+const state = {
+  product: null,
+  airport: null,
+  outDate: null,
+  outTime: null,
+  inDate: null,
+  inTime: null,
+  roomType: 'D20',
+  roomType2: '',
+  adults: 2,
+  children: 0,
+  infants: 0,
+  flight: 'default'
+};
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  // Check for URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const locationParam = urlParams.get('Location') || urlParams.get('location');
+  const productParam = urlParams.get('Product') || urlParams.get('product');
+
+  // Valid UK airport codes
+  const validAirports = ['LHR', 'LGW', 'MAN', 'STN', 'LTN', 'BHX', 'EDI', 'BRS', 'NCL', 'LBA', 'EMA', 'LPL', 'GLA', 'EXT', 'LCY'];
+
+  // Map product codes to product values
+  const productMap = {
+    'cp': 'parking',
+    'hcp': 'hotel-parking',
+    'ho': 'hotel',
+    'lo': 'lounge',
+    'ti': 'insurance',
+    'ot': 'transfers',
+    'ch': 'carhire',
+    'ft': 'fasttrack'
+  };
+
+  // Set airport if valid
+  if (locationParam && validAirports.includes(locationParam.toUpperCase())) {
+    state.airport = locationParam.toUpperCase();
+  }
+
+  // Set product if valid
+  if (productParam && productMap[productParam.toLowerCase()]) {
+    state.product = productMap[productParam.toLowerCase()];
+    updateTitlesForProduct(state.product);
+  }
+
+  // Check hash on load
+  const hash = window.location.hash.slice(1);
+  if (hash && document.getElementById(`screen-${hash}`)) {
+    navigateToStep(hash, false);
+  } else if (state.product && state.airport) {
+    // Both product and airport are set
+    // Insurance, transfers, car hire, and fast track don't need dates - submit immediately
+    if (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack') {
+      submitSearch();
+    } else {
+      // Other products need date selection
+      generateDateScroller('outDateScroller', 'outdate');
+      navigateToStep('outdate');
+    }
+  } else if (state.product) {
+    // Product is set - skip to airport selection
+    navigateToStep('airport');
+  } else if (state.airport) {
+    // Airport is set - show product selection (default behavior)
+    // navigateToStep('product') is implicit as it's the first screen
+  }
+
+  // Set up product selection
+  document.querySelectorAll('#screen-product .option-card').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.product = btn.dataset.value;
+      const next = btn.dataset.next;
+
+      // Update titles based on product
+      updateTitlesForProduct(state.product);
+
+      // Insurance, transfers, car hire, and fast track submit immediately if airport is set
+      if (state.airport && (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack')) {
+        submitSearch();
+      }
+      // Skip airport screen if Location param is valid
+      else if (state.airport && next === 'airport') {
+        generateDateScroller('outDateScroller', 'outdate');
+        navigateToStep('outdate');
+      } else {
+        navigateToStep(next);
+      }
+    });
+  });
+
+  // Set up airport selection
+  document.querySelectorAll('#screen-airport .option-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.airport = btn.dataset.value;
+      // Insurance, transfers, car hire, and fast track don't need dates - submit immediately
+      if (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack') {
+        submitSearch();
+      } else {
+        generateDateScroller('outDateScroller', 'outdate');
+        navigateToStep('outdate');
+      }
+    });
+  });
+
+  // Set up back buttons
+  document.querySelectorAll('.back-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.back;
+      navigateToStep(target, true);
+    });
+  });
+
+  // Set up skip button
+  document.querySelector('.skip-btn').addEventListener('click', () => {
+    submitSearch();
+  });
+
+  // Set up submit button
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    submitSearch();
+  });
+
+  // Set up destination select
+  document.getElementById('destinationSelect').addEventListener('change', function() {
+    if (this.value) {
+      fetchFlights(state.airport, state.outDate, this.value);
+    }
+  });
+
+  // Set up flight select
+  document.getElementById('flightSelect').addEventListener('change', function() {
+    state.flight = this.value || 'default';
+  });
+
+  // Set up room type selection
+  document.querySelectorAll('#screen-roomtype .option-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.roomType = btn.dataset.value;
+      // Go to second room type selection
+      navigateToStep('roomtype2');
+    });
+  });
+
+  // Set up second room type selection
+  document.querySelectorAll('#screen-roomtype2 .option-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.roomType2 = btn.dataset.value;
+      // Update flight screen back button to point to roomtype2
+      document.getElementById('flightBackBtn').dataset.back = 'roomtype2';
+      // Load destinations for flight lookup
+      fetchDestinations(state.airport, state.outDate);
+      navigateToStep('flight');
+    });
+  });
+
+  // Set up no thanks button
+  document.getElementById('noThanksBtn').addEventListener('click', () => {
+    state.roomType2 = '';
+    // Update flight screen back button to point to roomtype2
+    document.getElementById('flightBackBtn').dataset.back = 'roomtype2';
+    // Load destinations for flight lookup
+    fetchDestinations(state.airport, state.outDate);
+    navigateToStep('flight');
+  });
+
+  // Set up passenger selection
+  document.querySelectorAll('#screen-passengers .option-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const [adults, children, infants] = btn.dataset.value.split(',').map(Number);
+      state.adults = adults;
+      state.children = children;
+      state.infants = infants;
+      // Update flight screen back button to point to passengers
+      document.getElementById('flightBackBtn').dataset.back = 'passengers';
+      // Load destinations for flight lookup
+      fetchDestinations(state.airport, state.outDate);
+      navigateToStep('flight');
+    });
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash.slice(1);
+    if (hash) {
+      navigateToStep(hash, false);
+    }
+  });
+});
+
+// Update titles based on product
+function updateTitlesForProduct(product) {
+  const outDateTitle = document.getElementById('outDateTitle');
+  const outDateSubtitle = document.getElementById('outDateSubtitle');
+  const inDateTitle = document.getElementById('inDateTitle');
+  const inDateSubtitle = document.getElementById('inDateSubtitle');
+  const inDateBackBtn = document.getElementById('inDateBackBtn');
+
+  // Elements may not exist yet - null check
+  if (!outDateTitle) return;
+
+  if (product === 'hotel' || product === 'hotel-parking') {
+    outDateTitle.textContent = 'When are you staying?';
+    outDateSubtitle.textContent = 'Select your check-in date';
+    if (inDateTitle) inDateTitle.textContent = 'When are you leaving?';
+    if (inDateSubtitle) inDateSubtitle.textContent = 'Select your check-out date';
+    if (inDateBackBtn) inDateBackBtn.dataset.back = 'outdate'; // Hotel skips outtime, back goes to outdate
+  } else if (product === 'lounge') {
+    outDateTitle.textContent = 'When are you flying?';
+    outDateSubtitle.textContent = 'Select your departure date';
+  } else {
+    // Parking
+    outDateTitle.textContent = 'When are you going?';
+    outDateSubtitle.textContent = 'Select your drop-off date';
+    if (inDateTitle) inDateTitle.textContent = 'When are you back?';
+    if (inDateSubtitle) inDateSubtitle.textContent = 'Select your collection date';
+    if (inDateBackBtn) inDateBackBtn.dataset.back = 'outtime';
+  }
+}
+
+// Mark selected items when returning to a screen
+function markSelectedItems(step) {
+  if (step === 'roomtype' && state.roomType) {
+    document.querySelectorAll('#screen-roomtype .option-item').forEach(btn => {
+      if (btn.dataset.value === state.roomType) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  } else if (step === 'passengers' && state.adults) {
+    const passValue = `${state.adults},${state.children},${state.infants}`;
+    document.querySelectorAll('#screen-passengers .option-item').forEach(btn => {
+      if (btn.dataset.value === passValue) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  } else if (step === 'airport' && state.airport) {
+    document.querySelectorAll('#screen-airport .option-item').forEach(btn => {
+      if (btn.dataset.value === state.airport) {
+        btn.classList.add('selected');
+      } else {
+        btn.classList.remove('selected');
+      }
+    });
+  }
+}
+
+// Navigation
+function navigateToStep(step, isBack = false) {
+  const currentScreen = document.querySelector('.screen:not([style*="display: none"])');
+  const nextScreen = document.getElementById(`screen-${step}`);
+
+  if (!nextScreen) return;
+
+  // Hide current, show next
+  if (currentScreen && currentScreen !== nextScreen) {
+    currentScreen.classList.add(isBack ? 'slide-out-right' : 'slide-out-left');
+    setTimeout(() => {
+      currentScreen.style.display = 'none';
+      currentScreen.classList.remove('slide-out-left', 'slide-out-right');
+    }, 300);
+  }
+
+  setTimeout(() => {
+    nextScreen.style.display = 'block';
+    window.location.hash = step;
+    // Mark previously selected items
+    markSelectedItems(step);
+  }, isBack ? 0 : 150);
+}
+
+// Generate date scroller
+function generateDateScroller(scrollerId, nextStep) {
+  const scroller = document.getElementById(scrollerId);
+  scroller.innerHTML = '';
+
+  const today = new Date();
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // Determine which date is already selected
+  const selectedDate = nextStep === 'outdate' ? state.outDate : state.inDate;
+
+  // For return dates, determine minimum date (outDate + 1 day)
+  let minDate = null;
+  if (nextStep === 'indate' && state.outDate) {
+    minDate = new Date(state.outDate);
+    minDate.setDate(minDate.getDate() + 1); // Return date must be at least 1 day after outDate
+  }
+
+  // Generate 365 days
+  for (let i = 0; i < 365; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+
+    // Skip dates before minimum date for return dates
+    if (minDate && date < minDate) {
+      continue;
+    }
+
+    const dateStr = date.toISOString().split('T')[0];
+    const dayName = days[date.getDay()];
+    const dayNum = date.getDate();
+    const monthName = months[date.getMonth()];
+
+    const item = document.createElement('button');
+    item.className = 'date-item';
+    if (dateStr === selectedDate) {
+      item.classList.add('selected');
+    }
+    item.dataset.value = dateStr;
+    item.innerHTML = `
+      <div class="date-day">${dayName}</div>
+      <div class="date-full">${dayNum} ${monthName}</div>
+    `;
+
+    item.addEventListener('click', () => {
+      if (nextStep === 'outdate') {
+        state.outDate = dateStr;
+        // Hotel-only doesn't need drop-off time or return date - go straight to room type
+        if (state.product === 'hotel') {
+          // Update roomtype back button to point to outdate
+          document.getElementById('roomTypeBackBtn').dataset.back = 'outdate';
+          navigateToStep('roomtype');
+        }
+        // Hotel+parking doesn't need drop-off time - skip straight to return date
+        else if (state.product === 'hotel-parking') {
+          generateDateScroller('inDateScroller', 'indate');
+          navigateToStep('indate');
+        } else {
+          generateTimeScroller('outTimeScroller', 'outtime');
+          navigateToStep('outtime');
+        }
+      } else if (nextStep === 'indate') {
+        state.inDate = dateStr;
+        generateTimeScroller('inTimeScroller', 'intime');
+        navigateToStep('intime');
+      }
+    });
+
+    scroller.appendChild(item);
+  }
+}
+
+// Generate time scroller
+function generateTimeScroller(scrollerId, nextStep) {
+  const scroller = document.getElementById(scrollerId);
+  scroller.innerHTML = '';
+
+  // Check if we're selecting time for today
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
+
+  const selectedDate = nextStep === 'outtime' ? state.outDate : state.inDate;
+  const isToday = selectedDate === today;
+
+  // Determine which time is already selected
+  const selectedTime = nextStep === 'outtime' ? state.outTime : state.inTime;
+
+  // Generate times from 00:00 to 23:00 in hourly intervals
+  for (let h = 0; h < 24; h++) {
+    // Skip past times if today is selected
+    if (isToday && nextStep === 'outtime') {
+      if (h <= currentHour) {
+        continue;
+      }
+    }
+
+    const hour = h.toString().padStart(2, '0');
+    const timeValue = `${hour}:00`;
+    const timeEncoded = `${hour}%3A00`;
+
+      const item = document.createElement('button');
+      item.className = 'time-item';
+      if (timeEncoded === selectedTime) {
+        item.classList.add('selected');
+      }
+      item.dataset.value = timeEncoded;
+      item.innerHTML = `<div class="time-value">${timeValue}</div>`;
+
+      item.addEventListener('click', () => {
+        if (nextStep === 'outtime') {
+          state.outTime = timeEncoded;
+          // Lounge only needs departure date/time - skip return dates
+          if (state.product === 'lounge') {
+            navigateToStep('passengers');
+          } else {
+            generateDateScroller('inDateScroller', 'indate');
+            navigateToStep('indate');
+          }
+        } else if (nextStep === 'intime') {
+          state.inTime = timeEncoded;
+          // Check if product needs room type selection
+          if (state.product === 'hotel-parking') {
+            // Update roomtype back button to point to intime for hotel+parking
+            document.getElementById('roomTypeBackBtn').dataset.back = 'intime';
+            navigateToStep('roomtype');
+          } else {
+            // Parking - update flight screen back button to point to intime
+            document.getElementById('flightBackBtn').dataset.back = 'intime';
+            // Load destinations for flight lookup
+            fetchDestinations(state.airport, state.outDate);
+            navigateToStep('flight');
+          }
+        }
+      });
+
+    scroller.appendChild(item);
+  }
+
+  // Auto-scroll to midday (12:00)
+  setTimeout(() => {
+    const middayItem = scroller.querySelector('[data-value="12%3A00"]');
+    if (middayItem) {
+      middayItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, 300);
+}
+
+// Fetch destinations
+async function fetchDestinations(depart, departDate) {
+  const select = document.getElementById('destinationSelect');
+
+  try {
+    const response = await fetch(
+      `${FLIGHT_API}/destinations?location=${depart}&departDate=${departDate}`
+    );
+
+    if (!response.ok) return;
+
+    const destinations = await response.json();
+
+    if (destinations && destinations.length > 0) {
+      destinations.forEach(dest => {
+        const option = document.createElement('option');
+        option.value = dest.airports.join(',');
+        option.textContent = `${dest.city}, ${dest.country}`;
+        select.appendChild(option);
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching destinations:', error);
+  }
+}
+
+// Fetch flights
+async function fetchFlights(depart, departDate, destination) {
+  const select = document.getElementById('flightSelect');
+  select.style.display = 'block';
+  select.innerHTML = '<option value="">Loading flights...</option>';
+
+  try {
+    const response = await fetch(
+      `${FLIGHT_API}/searchDayFlights?location=${depart}&departDate=${departDate}&destination=${destination}&fullResults=false`
+    );
+
+    if (!response.ok) {
+      select.innerHTML = '<option value="">No flights found</option>';
+      return;
+    }
+
+    const flights = await response.json();
+    select.innerHTML = '<option value="">Select your flight...</option>';
+
+    if (flights && flights.length > 0) {
+      // Calculate minimum flight time (2 hours after outTime)
+      let minFlightTime = null;
+      if (state.outTime) {
+        const outTimeDecoded = state.outTime.replace('%3A', ':');
+        const [outHour, outMin] = outTimeDecoded.split(':').map(Number);
+        const outMinutes = outHour * 60 + outMin;
+        const minMinutes = outMinutes + 120; // 2 hours later
+        minFlightTime = `${String(Math.floor(minMinutes / 60)).padStart(2, '0')}:${String(minMinutes % 60).padStart(2, '0')}`;
+      }
+
+      let filteredCount = 0;
+      flights.forEach(f => {
+        const code = (f.flight && f.flight.code) || '';
+        const depTime = (f.departure && f.departure.time) || '';
+        const stops = (f.flight && f.flight.connectingFlights && f.flight.connectingFlights.amount) || 0;
+        const stopsText = stops === 0 ? 'Direct' : `${stops} stop${stops > 1 ? 's' : ''}`;
+
+        // Filter out flights before 2 hours after outTime
+        if (minFlightTime && depTime && depTime < minFlightTime) {
+          return; // Skip this flight
+        }
+
+        filteredCount++;
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = `${code} - ${depTime} (${stopsText})`;
+        select.appendChild(option);
+      });
+
+      if (filteredCount === 0) {
+        select.innerHTML = '<option value="">No flights found (2+ hours after drop-off)</option>';
+      }
+    } else {
+      select.innerHTML = '<option value="">No flights found</option>';
+    }
+  } catch (error) {
+    console.error('Error fetching flights:', error);
+    select.innerHTML = '<option value="">Error loading flights</option>';
+  }
+}
+
+// Submit search
+function submitSearch() {
+  const { product, airport, outDate, outTime, inDate, inTime, roomType, roomType2, adults, children, infants, flight } = state;
+
+  // Validate required fields based on product type
+  if (product === 'insurance' || product === 'transfers' || product === 'carhire' || product === 'fasttrack') {
+    // Insurance, transfers, car hire, and fast track only need product and airport
+    if (!product || !airport) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else if (product === 'lounge') {
+    // Lounge only needs departure date/time
+    if (!product || !airport || !outDate || !outTime) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else if (product === 'hotel') {
+    // Hotel-only only needs check-in date (outDate)
+    if (!product || !airport || !outDate) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else if (product === 'hotel-parking') {
+    // Hotel+parking doesn't need outTime (drop-off time)
+    if (!product || !airport || !outDate || !inDate || !inTime) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else {
+    // Parking needs all date/time fields
+    if (!product || !airport || !outDate || !outTime || !inDate || !inTime) {
+      alert('Please complete all fields');
+      return;
+    }
+  }
+
+  const host = window.location.host;
+  const isLocal = host.startsWith('127') || host.includes('github.io');
+  const basedomain = isLocal ? 'www.holidayextras.com' : host;
+
+  // Get all URL params to pass through
+  const urlParams = new URLSearchParams(window.location.search);
+  const allParams = urlParams.toString();
+
+  // Build search URL
+  let searchUrl;
+  if (product === 'parking') {
+    searchUrl = `https://${basedomain}/static/?selectProduct=cp&#/categories?agent=WY992&ppts=&customer_ref=&lang=en&adults=2&depart=${airport}&terminal=&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&park_from=${outTime}&park_to=${inTime}&filter_meetandgreet=&filter_parkandride=&children=0&infants=0&redirectReferal=carpark&from_categories=true&adcode=&promotionCode=`;
+  } else if (product === 'hotel-parking') {
+    // Hotel+Parking uses stayDate (outDate-1), out=outDate, in=inDate, room_1=roomType, room_2=roomType2
+    searchUrl = `https://${basedomain}/static/?selectProduct=hcp&#/hotel_with_parking?agent=WY992&ppts=0&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&in=${inDate}&out=${outDate}&stay=${outDate}&room_1=${roomType}&room_2=${roomType2}&adcode=&promotionCode=`;
+  } else if (product === 'hotel') {
+    // Hotel-only uses stay=outDate (check-in date), out=outDate+1 day
+    const checkOutDate = new Date(outDate);
+    checkOutDate.setDate(checkOutDate.getDate() + 1);
+    const outDateFormatted = checkOutDate.toISOString().split('T')[0];
+    searchUrl = `https://${basedomain}/static/?selectProduct=ho&#/hotel?agent=WY992&ppts=&customer_ref=&lang=en&depart=${airport}&terminal=&arrive=&flight=${flight}&out=${outDateFormatted}&stay=${outDate}&room_1=${roomType}&room_2=${roomType2}&adcode=&promotionCode=`;
+  } else if (product === 'lounge') {
+    // Lounge uses from={outDate}%20{outTime} format
+    searchUrl = `https://${basedomain}/static/?selectProduct=lo&#/lounge?agent=WY992&ppts=&customer_ref=&lang=en&adults=${adults}&children=${children}&infants=${infants}&depart=${airport}&terminal=&arrive=&flight=${flight}&from=${outDate}%20${outTime}&adcode=&promotionCode=`;
+  } else if (product === 'insurance') {
+    // Travel insurance - pass through all params
+    searchUrl = `https://${basedomain}/travel-insurance.html?chosen=ins&${allParams}`;
+  } else if (product === 'transfers') {
+    // Overseas transfers - pass through all params
+    searchUrl = `https://${basedomain}/airport-transfers.html?chosen=transfers&${allParams}`;
+  } else if (product === 'carhire') {
+    // Car hire - pass through all params (note: launch_id query uses ?)
+    searchUrl = `https://${basedomain}/car-hire.html?launch_id=ENG&chosen=carhire&${allParams}`;
+  } else if (product === 'fasttrack') {
+    // Fast track - pass through all params
+    searchUrl = `https://${basedomain}/fast-track.html?chosen=fasttrack&${allParams}`;
+  }
+
+  window.location.href = searchUrl;
+}
+  </script>
+</body>
+</html>
