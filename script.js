@@ -57,9 +57,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (hash && document.getElementById(`screen-${hash}`)) {
     navigateToStep(hash, false);
   } else if (state.product && state.airport) {
-    // Both product and airport are set - skip to date selection
-    generateDateScroller('outDateScroller', 'outdate');
-    navigateToStep('outdate');
+    // Both product and airport are set
+    // Insurance, transfers, car hire, and fast track don't need dates - submit immediately
+    if (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack') {
+      submitSearch();
+    } else {
+      // Other products need date selection
+      generateDateScroller('outDateScroller', 'outdate');
+      navigateToStep('outdate');
+    }
   } else if (state.product) {
     // Product is set - skip to airport selection
     navigateToStep('airport');
