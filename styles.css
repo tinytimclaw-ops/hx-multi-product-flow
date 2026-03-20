@@ -367,7 +367,8 @@ body {
   box-shadow: 0 0 0 4px rgba(253,220,6,0.2);
 }
 
-.skip-btn {
+.skip-btn,
+.no-thanks-btn {
   background: transparent;
   border: 2px solid rgba(255,255,255,0.5);
   color: #fff;
@@ -380,9 +381,17 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-.skip-btn:hover {
+.skip-btn:hover,
+.no-thanks-btn:hover {
   background: rgba(255,255,255,0.1);
   border-color: #fff;
+}
+
+.no-thanks-btn {
+  width: 100%;
+  margin-top: 24px;
+  position: sticky;
+  bottom: 20px;
 }
 
 .submit-btn {
