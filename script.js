@@ -34,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     'cp': 'parking',
     'hcp': 'hotel-parking',
     'ho': 'hotel',
-    'lo': 'lounge'
+    'lo': 'lounge',
+    'ti': 'insurance',
+    'ot': 'transfers'
   };
 
   // Set airport if valid
@@ -87,8 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('#screen-airport .option-item').forEach(btn => {
     btn.addEventListener('click', () => {
       state.airport = btn.dataset.value;
-      generateDateScroller('outDateScroller', 'outdate');
-      navigateToStep('outdate');
+      // Insurance and transfers don't need dates - submit immediately
+      if (state.product === 'insurance' || state.product === 'transfers') {
+        submitSearch();
+      } else {
+        generateDateScroller('outDateScroller', 'outdate');
+        navigateToStep('outdate');
+      }
     });
   });
 
@@ -280,8 +287,8 @@ function generateDateScroller(scrollerId, nextStep) {
     minDate.setDate(minDate.getDate() + 1); // Return date must be at least 1 day after outDate
   }
 
-  // Generate 90 days
-  for (let i = 0; i < 90; i++) {
+  // Generate 365 days
+  for (let i = 0; i < 365; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() + i);
 
@@ -503,7 +510,13 @@ function submitSearch() {
   const { product, airport, outDate, outTime, inDate, inTime, roomType, roomType2, adults, children, infants, flight } = state;
 
   // Validate required fields based on product type
-  if (product === 'lounge') {
+  if (product === 'insurance' || product === 'transfers') {
+    // Insurance and transfers only need product and airport
+    if (!product || !airport) {
+      alert('Please complete all fields');
+      return;
+    }
+  } else if (product === 'lounge') {
     // Lounge only needs departure date/time
     if (!product || !airport || !outDate || !outTime) {
       alert('Please complete all fields');
@@ -549,6 +562,12 @@ function submitSearch() {
   } else if (product === 'lounge') {
     // Lounge uses from={outDate}%20{outTime} format
     searchUrl = `https://${basedomain}/static/?selectProduct=lo&#/lounge?agent=WY992&ppts=&customer_ref=&lang=en&adults=${adults}&children=${children}&infants=${infants}&depart=${airport}&terminal=&arrive=&flight=${flight}&from=${outDate}%20${outTime}&adcode=&promotionCode=`;
+  } else if (product === 'insurance') {
+    // Travel insurance - basic product page
+    searchUrl = `https://${basedomain}/travel-insurance/?agent=WY992`;
+  } else if (product === 'transfers') {
+    // Overseas transfers - basic product page
+    searchUrl = `https://${basedomain}/transfers/?agent=WY992`;
   }
 
   window.location.href = searchUrl;
