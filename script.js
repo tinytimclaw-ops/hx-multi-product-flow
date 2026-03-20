@@ -345,8 +345,7 @@ function generateTimeScroller(scrollerId, nextStep) {
         }
       });
 
-      scroller.appendChild(item);
-    }
+    scroller.appendChild(item);
   }
 
   // Auto-scroll to midday (12:00)
