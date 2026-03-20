@@ -83,8 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update titles based on product
       updateTitlesForProduct(state.product);
 
+      // Insurance, transfers, car hire, and fast track submit immediately if airport is set
+      if (state.airport && (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack')) {
+        submitSearch();
+      }
       // Skip airport screen if Location param is valid
-      if (state.airport && next === 'airport') {
+      else if (state.airport && next === 'airport') {
         generateDateScroller('outDateScroller', 'outdate');
         navigateToStep('outdate');
       } else {
