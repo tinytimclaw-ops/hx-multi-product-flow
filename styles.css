@@ -1,0 +1,395 @@
+/* Holiday Extras Multi-Product Flow */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #542E91 0%, #3d2168 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Screens */
+.screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.screen.slide-out-left {
+  animation: slideOutLeft 0.4s ease-out forwards;
+}
+
+.screen.slide-out-right {
+  animation: slideOutRight 0.4s ease-out forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slideOutLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.9);
+  }
+}
+
+@keyframes slideOutRight {
+  to {
+    opacity: 0;
+    transform: translateX(100%) scale(0.9);
+  }
+}
+
+/* Banner */
+.banner {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  animation: bannerPulse 3s ease-in-out infinite;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes bannerPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* Screen content */
+.screen-content {
+  flex: 1;
+  padding: 32px 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 24px;
+  animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.logo {
+  height: 60px;
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateX(-4px);
+}
+
+.screen-title {
+  color: #fff;
+  font-size: 36px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 12px;
+  animation: fadeIn 0.6s ease-out 0.2s both;
+}
+
+.screen-subtitle {
+  color: rgba(255,255,255,0.9);
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Option cards (product selection) */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.option-card {
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  border: 3px solid transparent;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  font-family: 'Nunito', sans-serif;
+}
+
+.option-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  border-color: #FDDC06;
+  box-shadow: 0 12px 24px rgba(253,220,6,0.4);
+}
+
+.option-card:active {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.option-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.option-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #542E91;
+  margin-bottom: 4px;
+}
+
+.option-desc {
+  font-size: 14px;
+  color: #767d7d;
+}
+
+/* Option list (airport selection) */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.option-item {
+  background: rgba(255,255,255,0.95);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #542E91;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.option-item:hover {
+  background: #fff;
+  border-color: #FDDC06;
+  transform: translateX(8px);
+  box-shadow: 0 4px 12px rgba(253,220,6,0.3);
+}
+
+/* Date & Time scrollers */
+.date-scroller,
+.time-scroller {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.date-scroller::-webkit-scrollbar,
+.time-scroller::-webkit-scrollbar {
+  width: 8px;
+}
+
+.date-scroller::-webkit-scrollbar-track,
+.time-scroller::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+}
+
+.date-scroller::-webkit-scrollbar-thumb,
+.time-scroller::-webkit-scrollbar-thumb {
+  background: #FDDC06;
+  border-radius: 10px;
+}
+
+.date-item,
+.time-item {
+  background: rgba(255,255,255,0.9);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.date-item:hover,
+.time-item:hover {
+  background: #fff;
+  border-color: #FDDC06;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(253,220,6,0.3);
+}
+
+.date-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: #542E91;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.date-full {
+  font-size: 20px;
+  font-weight: 700;
+  color: #232323;
+}
+
+.time-value {
+  font-size: 32px;
+  font-weight: 800;
+  color: #542E91;
+}
+
+/* Flight section */
+.flight-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+  animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.flight-select {
+  background: rgba(255,255,255,0.95);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 18px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #542E91;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23542E91' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 20px;
+  padding-right: 48px;
+}
+
+.flight-select:focus {
+  outline: none;
+  border-color: #FDDC06;
+  box-shadow: 0 0 0 4px rgba(253,220,6,0.2);
+}
+
+.skip-btn {
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.5);
+  color: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+}
+
+.skip-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #FDDC06 0%, #ffc107 100%);
+  border: none;
+  color: #542E91;
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 8px 20px rgba(253,220,6,0.4);
+}
+
+.submit-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(253,220,6,0.6);
+}
+
+.submit-btn:active {
+  transform: translateY(-2px);
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .screen-title {
+    font-size: 28px;
+  }
+
+  .screen-subtitle {
+    font-size: 16px;
+  }
+
+  .options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .banner {
+    height: 150px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+}

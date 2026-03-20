@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Holiday Extras - Less hassle. More holiday.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Step 1: Product selection with banner -->
+    <div class="screen" id="screen-product" data-step="product">
+      <div class="banner">
+        <img src="assets/banner.jpg" alt="Holiday Extras" class="banner-img">
+      </div>
+
+      <div class="screen-content">
+        <div class="logo-container">
+          <img src="https://d17s4kc6349e5h.cloudfront.net/holidayextras/assets/images/logos/HolidayExtras-logo-horizontal-transparent.svg"
+               alt="Holiday Extras" class="logo">
+        </div>
+
+        <h1 class="screen-title">What do you need?</h1>
+        <p class="screen-subtitle">Less hassle. More holiday.</p>
+
+        <div class="options-grid">
+          <button class="option-card" data-value="parking" data-next="airport">
+            <div class="option-icon">🅿️</div>
+            <div class="option-title">Airport Parking</div>
+            <div class="option-desc">Save up to 60%</div>
+          </button>
+
+          <button class="option-card" data-value="hotel-parking" data-next="airport">
+            <div class="option-icon">🏨</div>
+            <div class="option-title">Hotel + Parking</div>
+            <div class="option-desc">Stay & park packages</div>
+          </button>
+
+          <button class="option-card" data-value="hotel" data-next="airport">
+            <div class="option-icon">🛏️</div>
+            <div class="option-title">Airport Hotel</div>
+            <div class="option-desc">Stay before you fly</div>
+          </button>
+
+          <button class="option-card" data-value="lounge" data-next="airport">
+            <div class="option-icon">✈️</div>
+            <div class="option-title">Airport Lounge</div>
+            <div class="option-desc">Relax in style</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Airport selection -->
+    <div class="screen" id="screen-airport" data-step="airport" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="product">← Back</button>
+
+        <h1 class="screen-title">Which airport?</h1>
+        <p class="screen-subtitle">Select your departure airport</p>
+
+        <div class="options-list" id="airportList">
+          <button class="option-item" data-value="LHR">London Heathrow</button>
+          <button class="option-item" data-value="LGW">London Gatwick</button>
+          <button class="option-item" data-value="MAN">Manchester</button>
+          <button class="option-item" data-value="STN">London Stansted</button>
+          <button class="option-item" data-value="LTN">London Luton</button>
+          <button class="option-item" data-value="BHX">Birmingham</button>
+          <button class="option-item" data-value="EDI">Edinburgh</button>
+          <button class="option-item" data-value="BRS">Bristol</button>
+          <button class="option-item" data-value="NCL">Newcastle</button>
+          <button class="option-item" data-value="LBA">Leeds Bradford</button>
+          <button class="option-item" data-value="EMA">East Midlands</button>
+          <button class="option-item" data-value="LPL">Liverpool</button>
+          <button class="option-item" data-value="GLA">Glasgow</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Drop-off date -->
+    <div class="screen" id="screen-outdate" data-step="outdate" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="airport">← Back</button>
+
+        <h1 class="screen-title">When are you going?</h1>
+        <p class="screen-subtitle">Select your drop-off date</p>
+
+        <div class="date-scroller" id="outDateScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 4: Drop-off time -->
+    <div class="screen" id="screen-outtime" data-step="outtime" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="outdate">← Back</button>
+
+        <h1 class="screen-title">What time?</h1>
+        <p class="screen-subtitle">Drop-off time</p>
+
+        <div class="time-scroller" id="outTimeScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 5: Collection date -->
+    <div class="screen" id="screen-indate" data-step="indate" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="outtime">← Back</button>
+
+        <h1 class="screen-title">When are you back?</h1>
+        <p class="screen-subtitle">Select your collection date</p>
+
+        <div class="date-scroller" id="inDateScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 6: Collection time -->
+    <div class="screen" id="screen-intime" data-step="intime" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="indate">← Back</button>
+
+        <h1 class="screen-title">Return time?</h1>
+        <p class="screen-subtitle">Collection time</p>
+
+        <div class="time-scroller" id="inTimeScroller"></div>
+      </div>
+    </div>
+
+    <!-- Step 7: Flight (optional) -->
+    <div class="screen" id="screen-flight" data-step="flight" style="display: none;">
+      <div class="screen-content">
+        <button class="back-btn" data-back="intime">← Back</button>
+
+        <h1 class="screen-title">Add your flight?</h1>
+        <p class="screen-subtitle">Optional - helps us match your parking time</p>
+
+        <div class="flight-section">
+          <select class="flight-select" id="destinationSelect">
+            <option value="">Select destination...</option>
+          </select>
+
+          <select class="flight-select" id="flightSelect" style="display: none;">
+            <option value="">Select your flight...</option>
+          </select>
+
+          <button class="skip-btn">Skip - Continue without flight</button>
+        </div>
+
+        <button class="submit-btn" id="submitBtn">Find options →</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
