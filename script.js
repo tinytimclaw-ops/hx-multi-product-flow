@@ -138,12 +138,15 @@ function updateTitlesForProduct(product) {
   const inDateSubtitle = document.getElementById('inDateSubtitle');
   const inDateBackBtn = document.getElementById('inDateBackBtn');
 
+  // Elements may not exist yet - null check
+  if (!outDateTitle) return;
+
   if (product === 'hotel' || product === 'hotel-parking') {
     outDateTitle.textContent = 'When are you staying?';
     outDateSubtitle.textContent = 'Select your check-in date';
-    inDateTitle.textContent = 'When are you leaving?';
-    inDateSubtitle.textContent = 'Select your check-out date';
-    inDateBackBtn.dataset.back = 'outdate'; // Hotel skips outtime, back goes to outdate
+    if (inDateTitle) inDateTitle.textContent = 'When are you leaving?';
+    if (inDateSubtitle) inDateSubtitle.textContent = 'Select your check-out date';
+    if (inDateBackBtn) inDateBackBtn.dataset.back = 'outdate'; // Hotel skips outtime, back goes to outdate
   } else if (product === 'lounge') {
     outDateTitle.textContent = 'When are you flying?';
     outDateSubtitle.textContent = 'Select your departure date';
@@ -151,9 +154,9 @@ function updateTitlesForProduct(product) {
     // Parking
     outDateTitle.textContent = 'When are you going?';
     outDateSubtitle.textContent = 'Select your drop-off date';
-    inDateTitle.textContent = 'When are you back?';
-    inDateSubtitle.textContent = 'Select your collection date';
-    inDateBackBtn.dataset.back = 'outtime';
+    if (inDateTitle) inDateTitle.textContent = 'When are you back?';
+    if (inDateSubtitle) inDateSubtitle.textContent = 'Select your collection date';
+    if (inDateBackBtn) inDateBackBtn.dataset.back = 'outtime';
   }
 }
 
