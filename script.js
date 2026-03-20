@@ -140,10 +140,22 @@ function generateDateScroller(scrollerId, nextStep) {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+  // For return dates, determine minimum date (outDate + 1 day)
+  let minDate = null;
+  if (nextStep === 'indate' && state.outDate) {
+    minDate = new Date(state.outDate);
+    minDate.setDate(minDate.getDate() + 1); // Return date must be at least 1 day after outDate
+  }
+
   // Generate 90 days
   for (let i = 0; i < 90; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() + i);
+
+    // Skip dates before minimum date for return dates
+    if (minDate && date < minDate) {
+      continue;
+    }
 
     const dateStr = date.toISOString().split('T')[0];
     const dayName = days[date.getDay()];
