@@ -295,20 +295,18 @@ function generateTimeScroller(scrollerId, nextStep) {
   // Determine which time is already selected
   const selectedTime = nextStep === 'outtime' ? state.outTime : state.inTime;
 
-  // Generate times from 00:00 to 23:30 in 30min intervals
+  // Generate times from 00:00 to 23:00 in hourly intervals
   for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 30) {
-      // Skip past times if today is selected
-      if (isToday && nextStep === 'outtime') {
-        if (h < currentHour || (h === currentHour && m <= currentMinute)) {
-          continue;
-        }
+    // Skip past times if today is selected
+    if (isToday && nextStep === 'outtime') {
+      if (h <= currentHour) {
+        continue;
       }
+    }
 
-      const hour = h.toString().padStart(2, '0');
-      const min = m.toString().padStart(2, '0');
-      const timeValue = `${hour}:${min}`;
-      const timeEncoded = `${hour}%3A${min}`;
+    const hour = h.toString().padStart(2, '0');
+    const timeValue = `${hour}:00`;
+    const timeEncoded = `${hour}%3A00`;
 
       const item = document.createElement('button');
       item.className = 'time-item';
