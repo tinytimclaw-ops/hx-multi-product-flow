@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Airport Parking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Hero Banner -->
+  <div class="banner">
+    <img class="banner-img" src="assets/banner.jpg" alt="">
+    <div class="banner-overlay">
+      <div class="banner-text">
+        <span class="banner-badge">Meet &amp; Greet</span>
+        <h1 class="banner-headline" id="bannerHeadline">Save up to 60% on airport parking</h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Search Card -->
+    <div class="search-card">
+      <h2 class="search-card-title" id="searchCardTitle">Search parking</h2>
+
+      <form class="hx-search-forms" id="searchForm">
+        <!-- Airport Selection (hidden if Location param is valid) -->
+        <div class="hx-search-forms_field" id="airportField">
+          <label class="hx-search-forms_label" for="airportSelect">Airport</label>
+          <select class="hx-search-forms_select" id="airportSelect" required>
+            <option value="">Select airport...</option>
+            <option value="LHR">London Heathrow</option>
+            <option value="LGW">London Gatwick</option>
+            <option value="MAN">Manchester</option>
+            <option value="STN">London Stansted</option>
+            <option value="LTN">London Luton</option>
+            <option value="BHX">Birmingham</option>
+            <option value="EDI">Edinburgh</option>
+            <option value="BRS">Bristol</option>
+            <option value="NCL">Newcastle</option>
+            <option value="LBA">Leeds Bradford</option>
+            <option value="EMA">East Midlands</option>
+            <option value="LPL">Liverpool</option>
+            <option value="GLA">Glasgow</option>
+          </select>
+        </div>
+
+        <!-- Drop-off Date -->
+        <div class="hx-search-forms_field">
+          <label class="hx-search-forms_label" for="outDate">Drop-off date</label>
+          <input type="date" class="hx-search-forms_text-input" id="outDate" required>
+        </div>
+
+        <!-- Drop-off Time -->
+        <div class="hx-search-forms_field">
+          <label class="hx-search-forms_label" for="outTime">Drop-off time</label>
+          <select class="hx-search-forms_select" id="outTime" required>
+            <option value="00%3A00">00:00</option>
+            <option value="01%3A00">01:00</option>
+            <option value="02%3A00">02:00</option>
+            <option value="03%3A00">03:00</option>
+            <option value="04%3A00">04:00</option>
+            <option value="05%3A00">05:00</option>
+            <option value="06%3A00" selected>06:00</option>
+            <option value="07%3A00">07:00</option>
+            <option value="08%3A00">08:00</option>
+            <option value="09%3A00">09:00</option>
+            <option value="10%3A00">10:00</option>
+            <option value="11%3A00">11:00</option>
+            <option value="12%3A00">12:00</option>
+            <option value="13%3A00">13:00</option>
+            <option value="14%3A00">14:00</option>
+            <option value="15%3A00">15:00</option>
+            <option value="16%3A00">16:00</option>
+            <option value="17%3A00">17:00</option>
+            <option value="18%3A00">18:00</option>
+            <option value="19%3A00">19:00</option>
+            <option value="20%3A00">20:00</option>
+            <option value="21%3A00">21:00</option>
+            <option value="22%3A00">22:00</option>
+            <option value="23%3A00">23:00</option>
+          </select>
+        </div>
+
+        <!-- Collection Date -->
+        <div class="hx-search-forms_field">
+          <label class="hx-search-forms_label" for="inDate">Collection date</label>
+          <input type="date" class="hx-search-forms_text-input" id="inDate" required>
+        </div>
+
+        <!-- Collection Time -->
+        <div class="hx-search-forms_field">
+          <label class="hx-search-forms_label" for="inTime">Collection time</label>
+          <select class="hx-search-forms_select" id="inTime" required>
+            <option value="00%3A00">00:00</option>
+            <option value="01%3A00">01:00</option>
+            <option value="02%3A00">02:00</option>
+            <option value="03%3A00">03:00</option>
+            <option value="04%3A00">04:00</option>
+            <option value="05%3A00">05:00</option>
+            <option value="06%3A00">06:00</option>
+            <option value="07%3A00">07:00</option>
+            <option value="08%3A00">08:00</option>
+            <option value="09%3A00">09:00</option>
+            <option value="10%3A00">10:00</option>
+            <option value="11%3A00">11:00</option>
+            <option value="12%3A00" selected>12:00</option>
+            <option value="13%3A00">13:00</option>
+            <option value="14%3A00">14:00</option>
+            <option value="15%3A00">15:00</option>
+            <option value="16%3A00">16:00</option>
+            <option value="17%3A00">17:00</option>
+            <option value="18%3A00">18:00</option>
+            <option value="19%3A00">19:00</option>
+            <option value="20%3A00">20:00</option>
+            <option value="21%3A00">21:00</option>
+            <option value="22%3A00">22:00</option>
+            <option value="23%3A00">23:00</option>
+          </select>
+        </div>
+
+        <button type="submit" class="hx-search-forms_button">Search now</button>
+      </form>
+    </div>
+
+    <!-- USP Section -->
+    <div class="usp-section">
+      <div class="usp-card">
+        <div class="usp-icon">💰</div>
+        <h3 class="usp-title">Save up to 60%</h3>
+        <p class="usp-desc">Compare prices and book the best deal on airport parking</p>
+      </div>
+
+      <div class="usp-card">
+        <div class="usp-icon">✓</div>
+        <h3 class="usp-title">Price match guarantee</h3>
+        <p class="usp-desc">Find it cheaper elsewhere and we'll refund the difference</p>
+      </div>
+
+      <div class="usp-card">
+        <div class="usp-icon">🔒</div>
+        <h3 class="usp-title">Secure booking</h3>
+        <p class="usp-desc">Your data is protected with industry-leading security</p>
+      </div>
+
+      <div class="usp-card">
+        <div class="usp-icon">📞</div>
+        <h3 class="usp-title">24/7 customer support</h3>
+        <p class="usp-desc">Our team is here to help whenever you need us</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-text">&copy; 2026 Airport Parking. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

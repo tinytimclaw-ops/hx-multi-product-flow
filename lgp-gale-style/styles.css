@@ -1,0 +1,271 @@
+/* Gale Glazing-inspired LGP Parking Page */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #212121;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Banner Section */
+.banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #1a2a3a;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,.6) 0%, rgba(0,0,0,.3) 55%, rgba(0,0,0,.05) 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 48px;
+}
+
+.banner-text {
+  max-width: 500px;
+}
+
+.banner-badge {
+  display: inline-block;
+  background: #c74c28;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
+}
+
+.banner-headline {
+  font-size: 42px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Search Card */
+.search-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+  padding: 40px;
+  margin: -80px auto 60px;
+  position: relative;
+  z-index: 10;
+  max-width: 900px;
+}
+
+.search-card-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+/* Search Form */
+.hx-search-forms {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.hx-search-forms_field {
+  display: flex;
+  flex-direction: column;
+}
+
+.hx-search-forms_label {
+  font-size: 16px;
+  font-weight: 400;
+  color: #484e52;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.hx-search-forms_select,
+.hx-search-forms_text-input {
+  height: 46px;
+  border: 1px solid #deddde;
+  border-radius: 3px;
+  padding: 0 16px;
+  font-size: 16px;
+  color: #484e52;
+  background: #fff;
+  font-family: 'Ubuntu', sans-serif;
+  transition: all 0.2s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.hx-search-forms_select {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23484e52' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E") center right 12px no-repeat #fff;
+  background-size: 12px;
+  padding-right: 36px;
+}
+
+.hx-search-forms_select:hover,
+.hx-search-forms_text-input:hover {
+  border-color: #afafaf;
+}
+
+.hx-search-forms_select:focus,
+.hx-search-forms_text-input:focus {
+  outline: none;
+  border-color: #afafaf;
+  box-shadow: inset 0 0 0 3px rgba(46,154,193,.15);
+}
+
+.hx-search-forms_button {
+  grid-column: 1 / -1;
+  height: 56px;
+  background: #c74c28;
+  border: none;
+  border-radius: 9999px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Ubuntu', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 12px;
+  box-shadow: 0 4px 12px rgba(199,76,40,.3);
+}
+
+.hx-search-forms_button:hover {
+  background: #9d3c1f;
+  box-shadow: 0 6px 16px rgba(199,76,40,.4);
+  transform: translateY(-2px);
+}
+
+.hx-search-forms_button:active {
+  transform: translateY(0);
+}
+
+.hx-search-forms_button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(199,76,40,.3);
+}
+
+/* USP Section */
+.usp-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin-bottom: 80px;
+}
+
+.usp-card {
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.usp-card:hover {
+  border-color: #c74c28;
+  box-shadow: 0 8px 24px rgba(199,76,40,.1);
+  transform: translateY(-4px);
+}
+
+.usp-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.usp-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #212121;
+  margin-bottom: 8px;
+}
+
+.usp-desc {
+  font-size: 14px;
+  color: #484e52;
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  background: #f8f8f8;
+  padding: 32px 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.footer-text {
+  text-align: center;
+  color: #767d7d;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .banner-overlay {
+    padding: 0 24px;
+  }
+
+  .banner-headline {
+    font-size: 28px;
+  }
+
+  .search-card {
+    margin: -60px 16px 40px;
+    padding: 24px;
+  }
+
+  .search-card-title {
+    font-size: 20px;
+  }
+
+  .hx-search-forms {
+    grid-template-columns: 1fr;
+  }
+
+  .usp-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 385px) {
+  .banner-headline {
+    font-size: 24px;
+  }
+
+  .hx-search-forms_label {
+    font-size: 14px;
+  }
+}
