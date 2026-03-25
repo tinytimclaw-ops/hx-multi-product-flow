@@ -523,8 +523,8 @@ function submitSearch() {
 
   // Validate required fields based on product type
   if (product === 'insurance' || product === 'transfers' || product === 'carhire' || product === 'fasttrack') {
-    // Insurance, transfers, car hire, and fast track only need product and airport
-    if (!product || !airport) {
+    // Insurance, transfers, car hire, and fast track only need product (no airport/dates required)
+    if (!product) {
       alert('Please complete all fields');
       return;
     }
