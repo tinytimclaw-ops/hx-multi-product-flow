@@ -83,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Update titles based on product
       updateTitlesForProduct(state.product);
 
-      // Insurance, transfers, car hire, and fast track submit immediately if airport is set
-      if (state.airport && (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack')) {
+      // Insurance, transfers, car hire, and fast track submit immediately (no airport/dates needed)
+      if (state.product === 'insurance' || state.product === 'transfers' || state.product === 'carhire' || state.product === 'fasttrack') {
         submitSearch();
       }
       // Skip airport screen if Location param is valid
